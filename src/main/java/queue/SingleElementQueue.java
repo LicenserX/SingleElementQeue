@@ -3,7 +3,7 @@ package queue;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class SingleElementsQueue<T> {
+public class SingleElementQueue<T> {
 
     private volatile T element;
 
@@ -11,7 +11,7 @@ public class SingleElementsQueue<T> {
 
     private final Condition notEmpty;
 
-    public SingleElementsQueue(){
+    public SingleElementQueue(){
         lock = new ReentrantLock();
         notEmpty = lock.newCondition();
     }

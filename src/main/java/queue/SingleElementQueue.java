@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class SingleElementQueue<T>  extends AbstractQueue<T>
+public class SingleElementQueue<T> extends AbstractQueue<T>
         implements BlockingQueue<T> {
 
     private T element;
@@ -20,7 +20,7 @@ public class SingleElementQueue<T>  extends AbstractQueue<T>
     private final Condition notFull;
 
 
-    public SingleElementQueue(){
+    public SingleElementQueue() {
         lock = new ReentrantLock();
         notEmpty = lock.newCondition();
         notFull = lock.newCondition();
@@ -36,11 +36,10 @@ public class SingleElementQueue<T>  extends AbstractQueue<T>
         final ReentrantLock lock = this.lock;
         lock.lock();
         try {
-            if (element != null){
+            if (element != null) {
                 return false;
             }
-            element = e;
-            notEmpty.signal();
+            enqueue(e);
             return true;
         } finally {
             lock.unlock();
@@ -52,11 +51,10 @@ public class SingleElementQueue<T>  extends AbstractQueue<T>
         final ReentrantLock lock = this.lock;
         lock.lockInterruptibly();
         try {
-            while (element != null){
+            while (element != null) {
                 notFull.await();
             }
-            element = e;
-            notEmpty.signal();
+            enqueue(e);
         } finally {
             lock.unlock();
         }
@@ -74,8 +72,7 @@ public class SingleElementQueue<T>  extends AbstractQueue<T>
                 }
                 nanos = notFull.awaitNanos(nanos);
             }
-            element = e;
-            notEmpty.signal();
+            enqueue(e);
             return true;
         } finally {
             lock.unlock();
@@ -86,13 +83,10 @@ public class SingleElementQueue<T>  extends AbstractQueue<T>
         final ReentrantLock lock = this.lock;
         lock.lockInterruptibly();
         try {
-            while (element == null){
+            while (element == null) {
                 notEmpty.await();
             }
-            T e = element;
-            element = null;
-            notFull.signal();
-            return e;
+            return dequeue();
         } finally {
             lock.unlock();
         }
@@ -109,43 +103,79 @@ public class SingleElementQueue<T>  extends AbstractQueue<T>
                 }
                 nanos = notEmpty.awaitNanos(nanos);
             }
-            T e = element;
-            element = null;
-            notFull.signal();
-            return e;
+            return dequeue();
         } finally {
             lock.unlock();
         }
     }
 
+
     public T poll() {
         final ReentrantLock lock = this.lock;
         lock.lock();
         try {
-            if (element == null){
+            if (element == null) {
                 return null;
             }
-            T e = element;
-            element = null;
-            notFull.signal();
-            return e;
+            return dequeue();
         } finally {
             lock.unlock();
         }
     }
 
     public T peek() {
-        return null;
+        final ReentrantLock lock = this.lock;
+        lock.lock();
+        try {
+            return element; // null when queue is empty
+        } finally {
+            lock.unlock();
+        }
     }
 
     public int size() {
-        return element == null ? 0 : 1;
+        final ReentrantLock lock = this.lock;
+        lock.lock();
+        try {
+            return element == null ? 0 : 1;
+        } finally {
+            lock.unlock();
+        }
     }
 
+    public int remainingCapacity() {
+        final ReentrantLock lock = this.lock;
+        lock.lock();
+        try {
+            return size();
+        } finally {
+            lock.unlock();
+        }
+    }
 
+    public int drainTo(Collection<? super T> c) {
+        checkNotNull(c);
+        final ReentrantLock lock = this.lock;
+        lock.lock();
+        try {
+            c.add(poll());
+            return 1;
+        } finally {
+            lock.unlock();
+        }
+    }
 
+    private void enqueue(T e) {
+        element = e;
+        notEmpty.signal();
+    }
 
-
+    private T dequeue() {
+        T e = element;
+        element = null;
+        notFull.signal();
+        return e;
+    }
 
 
 
@@ -153,14 +183,6 @@ public class SingleElementQueue<T>  extends AbstractQueue<T>
 
     public Iterator<T> iterator() {
         return null;
-    }
-
-    public int remainingCapacity() {
-        return 0;
-    }
-
-    public int drainTo(Collection<? super T> c) {
-        return 0;
     }
 
     public int drainTo(Collection<? super T> c, int maxElements) {

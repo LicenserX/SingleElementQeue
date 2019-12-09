@@ -2,25 +2,41 @@ package observers.impl;
 
 import observers.Subscriber;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PoliticalChannel extends AbstractChannel implements Subscriber {
 
-    private String news;
+    private final List<String> newsHistory = new ArrayList<>();
 
     public PoliticalChannel(String uniqueChannelName) {
         super(uniqueChannelName);
     }
 
+//    TODO need synchronized?
     public void update(Object news) {
         if (news instanceof String){
-            this.news = (String) news;
+            synchronized (newsHistory){
+                newsHistory.add((String)news);
+            }
         }
     }
 
-    public String getNews() {
-        return news;
+    public List<String> getAllNews() {
+        synchronized (newsHistory) {
+            return newsHistory;
+        }
+    }
+
+    public String getLastNews() {
+        synchronized (newsHistory) {
+            return newsHistory.get(newsHistory.size() - 1);
+        }
     }
 
     public void setNews(String news) {
-        this.news = news;
+        synchronized (newsHistory){
+            newsHistory.add(news);
+        }
     }
 }

@@ -4,7 +4,7 @@ import observers.Subscriber;
 
 public class PoliticalChannel extends AbstractChannel implements Subscriber {
 
-    private volatile String news;
+    private String news;
 
     public PoliticalChannel(String uniqueChannelName) {
         super(uniqueChannelName);

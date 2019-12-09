@@ -21,7 +21,7 @@ public class NewsConsumer implements Runnable {
 
     @Override
     public void run() {
-        while (counter < 25) {
+        while (true) {
             try {
                 TimeUnit.MILLISECONDS.sleep(200);
                 System.out.println(counter + " Try to update news...");
@@ -36,7 +36,7 @@ public class NewsConsumer implements Runnable {
 
     private void print(News<?> news) {
         if (news != null) {
-            System.out.println(counter++ + "*" +  news.getNews().toString());
+            System.out.println(counter++ + " " +  news.getNews().toString());
         } else {
             System.out.println(counter++ + " No news");
         }

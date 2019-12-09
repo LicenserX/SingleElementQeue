@@ -4,7 +4,7 @@ public abstract class AbstractChannel {
 
     private String uniqueChannelName;
 
-    public AbstractChannel(String uniqueChannelName) {
+    AbstractChannel(String uniqueChannelName) {
         this.uniqueChannelName = uniqueChannelName;
     }
 

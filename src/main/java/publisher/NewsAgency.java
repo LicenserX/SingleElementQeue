@@ -38,28 +38,11 @@ public class NewsAgency {
     }
 
     public void notifyObservers(final News<?> news) {
-        if (news == null){
-            System.out.println("null in notifyObservers");
-        }
-//        if (news instanceof String){
-//            System.out.println("string");
-//        }
-//        if (news instanceof Double){
-//            System.out.println("Double");
-//        }
-//        if (news instanceof Object){
-//            System.out.println("Object");
-//        }
-
         final ReentrantLock lock = this.lock;
         lock.lock();
         try {
-//            channels.forEach(n -> n.update(news));
-            for (Subscriber c : channels ) {
-                if(news!= null ){
-                    c.update(news.getNews());
-                }
-
+            if (news != null) {
+                channels.forEach(n -> n.update(news.getNews()));
             }
         } finally {
             lock.unlock();

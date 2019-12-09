@@ -10,9 +10,9 @@ public class NewsProducer implements Runnable{
 
     private final Queue<News<?>> news;
 
-    News<String> politicalNews;
+    private News<String> politicalNews;
 
-    News<Double> stockNews;
+    private News<Double> stockNews;
 
     private int counter = 0;
 
@@ -35,7 +35,7 @@ public class NewsProducer implements Runnable{
 
     private void createStockNews() {
         stockNews = new News<>();
-        stockNews.setNews(99.0354);
+        stockNews.setNews(248.34);
     }
 
     private void createPoliticalNews() {
@@ -51,10 +51,9 @@ public class NewsProducer implements Runnable{
         }
     }
 
-
     @Override
     public void run() {
-        while (counter < 25) {
+        while (true) {
             try {
                 TimeUnit.MILLISECONDS.sleep(200);
             } catch (InterruptedException e) {

@@ -27,16 +27,12 @@ public class Main {
         service.submit(new NewsConsumer(singleElementQueue, newsAgency));
         service.shutdown();
 
-//        Thread.currentThread().join();
 
-
-        TimeUnit.MILLISECONDS.sleep(6000);
+        TimeUnit.MILLISECONDS.sleep(2000);
         String news1 = ((PoliticalChannel) politicalSubscriber).getNews();
         Double news2 = ((StockChannel) stockSubscriber).getQuotes();
 
-        System.out.println("!!!!!!!!!!!!! " + news1);
-        System.out.println("$$$$$$$$$$$$$ " + news2);
-
-
+        System.out.println("USA NEWS: " + news1);
+        System.out.println("CURRENT GAZPROM'S QUOTES: " + news2);
     }
 }

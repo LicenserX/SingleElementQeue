@@ -4,7 +4,7 @@ import observers.Subscriber;
 
 public class StockChannel extends AbstractChannel implements Subscriber {
 
-    private volatile Double quote;
+    private Double quote;
 
     public StockChannel(String uniqueChannelName) {
         super(uniqueChannelName);

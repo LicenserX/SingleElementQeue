@@ -8,22 +8,25 @@ import java.util.concurrent.TimeUnit;
 
 public class NewsConsumer implements Runnable {
 
-    private Queue<News<?>> news;
+    private final Queue<News<?>> news;
 
-    private NewsAgency newsAgency;
+    private final NewsAgency newsAgency;
+
+    private final int timeout;
 
     private int counter = 0;
 
-    public NewsConsumer(Queue<News<?>> news, NewsAgency newsAgency) {
+    public NewsConsumer(Queue<News<?>> news, NewsAgency newsAgency, int timeout) {
         this.news = news;
         this.newsAgency = newsAgency;
+        this.timeout = timeout;
     }
 
     @Override
     public void run() {
         while (true) {
             try {
-                TimeUnit.MILLISECONDS.sleep(200);
+                TimeUnit.MILLISECONDS.sleep(timeout);
                 System.out.println(counter + " Try to update news...");
             } catch (InterruptedException e) {
                 e.printStackTrace();

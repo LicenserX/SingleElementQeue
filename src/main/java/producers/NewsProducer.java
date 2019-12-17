@@ -14,10 +14,13 @@ public class NewsProducer implements Runnable{
 
     private News<Double> stockNews;
 
+    private int timeout;
+
     private int counter = 0;
 
-    public NewsProducer(Queue<News<?>> news) {
+    public NewsProducer(Queue<News<?>> news, int timeout) {
         this.news = news;
+        this.timeout = timeout;
     }
 
     private News<?> getRandomNews() {
@@ -55,7 +58,7 @@ public class NewsProducer implements Runnable{
     public void run() {
         while (true) {
             try {
-                TimeUnit.MILLISECONDS.sleep(200);
+                TimeUnit.MILLISECONDS.sleep(timeout);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

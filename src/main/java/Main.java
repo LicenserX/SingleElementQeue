@@ -25,8 +25,8 @@ public class Main {
         newsAgency.addObserver(stockSubscriber);
 
         ExecutorService service = Executors.newFixedThreadPool(2);
-        service.submit(new NewsProducer(singleElementQueue));
-        service.submit(new NewsConsumer(singleElementQueue, newsAgency));
+        service.submit(new NewsProducer(singleElementQueue, 200));
+        service.submit(new NewsConsumer(singleElementQueue, newsAgency, 200));
         service.shutdown();
 
 

@@ -1,4 +1,4 @@
-package queue;
+package com.concurrency.queue;
 
 import java.util.AbstractQueue;
 import java.util.Collection;
@@ -127,7 +127,7 @@ public class SingleElementQueue<T> extends AbstractQueue<T>
         final ReentrantLock lock = this.lock;
         lock.lock();
         try {
-            return element; // null when queue is empty
+            return element; // null when com.concurrency.queue is empty
         } finally {
             lock.unlock();
         }

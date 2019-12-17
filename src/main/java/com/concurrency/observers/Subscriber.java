@@ -1,4 +1,4 @@
-package observers;
+package com.concurrency.observers;
 
 @FunctionalInterface
 public interface Subscriber {

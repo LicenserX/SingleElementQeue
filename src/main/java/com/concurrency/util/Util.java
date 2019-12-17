@@ -1,4 +1,4 @@
-package util;
+package com.concurrency.util;
 
 import java.util.concurrent.ThreadLocalRandom;
 

@@ -1,7 +1,7 @@
-package producers;
+package com.concurrency.producers;
 
-import news.News;
-import util.Util;
+import com.concurrency.news.News;
+import com.concurrency.util.Util;
 
 import java.util.Queue;
 import java.util.concurrent.TimeUnit;

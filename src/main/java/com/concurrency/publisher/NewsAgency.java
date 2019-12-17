@@ -1,7 +1,7 @@
-package publisher;
+package com.concurrency.publisher;
 
-import news.News;
-import observers.Subscriber;
+import com.concurrency.news.News;
+import com.concurrency.observers.Subscriber;
 
 import java.util.ArrayList;
 import java.util.List;

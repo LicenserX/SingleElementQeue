@@ -1,6 +1,6 @@
-package observers.impl;
+package com.concurrency.observers.impl;
 
-import observers.Subscriber;
+import com.concurrency.observers.Subscriber;
 
 import java.util.ArrayList;
 import java.util.List;

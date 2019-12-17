@@ -1,4 +1,4 @@
-package observers.impl;
+package com.concurrency.observers.impl;
 
 public abstract class AbstractChannel {
 

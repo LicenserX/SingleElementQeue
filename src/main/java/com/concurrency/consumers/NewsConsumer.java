@@ -1,7 +1,7 @@
-package consumers;
+package com.concurrency.consumers;
 
-import news.News;
-import publisher.NewsAgency;
+import com.concurrency.news.News;
+import com.concurrency.publisher.NewsAgency;
 
 import java.util.Queue;
 import java.util.concurrent.TimeUnit;
@@ -27,7 +27,7 @@ public class NewsConsumer implements Runnable {
         while (true) {
             try {
                 TimeUnit.MILLISECONDS.sleep(timeout);
-                System.out.println(counter + " Try to update news...");
+                System.out.println(counter + " Try to update com.concurrency.news...");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -41,7 +41,7 @@ public class NewsConsumer implements Runnable {
         if (news != null) {
             System.out.println(counter++ + " " +  news.getNews().toString());
         } else {
-            System.out.println(counter++ + " No news");
+            System.out.println(counter++ + " No com.concurrency.news");
         }
     }
 }

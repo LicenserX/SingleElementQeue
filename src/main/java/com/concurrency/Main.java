@@ -1,11 +1,13 @@
-import consumers.NewsConsumer;
-import news.News;
-import observers.Subscriber;
-import observers.impl.PoliticalChannel;
-import observers.impl.StockChannel;
-import producers.NewsProducer;
-import publisher.NewsAgency;
-import queue.SingleElementQueue;
+package com.concurrency;
+
+import com.concurrency.consumers.NewsConsumer;
+import com.concurrency.news.News;
+import com.concurrency.observers.Subscriber;
+import com.concurrency.observers.impl.PoliticalChannel;
+import com.concurrency.observers.impl.StockChannel;
+import com.concurrency.producers.NewsProducer;
+import com.concurrency.publisher.NewsAgency;
+import com.concurrency.queue.SingleElementQueue;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -17,8 +19,8 @@ import java.util.concurrent.TimeUnit;
 public class Main {
     public static void main(String[] args) throws InterruptedException {
         Queue<News<?>> singleElementQueue = new SingleElementQueue<>();
-        Subscriber politicalSubscriber = new PoliticalChannel("Very cool political news");
-        Subscriber stockSubscriber = new StockChannel("Exact stock news");
+        Subscriber politicalSubscriber = new PoliticalChannel("Very cool political com.concurrency.news");
+        Subscriber stockSubscriber = new StockChannel("Exact stock com.concurrency.news");
         NewsAgency newsAgency = new NewsAgency();
 
         newsAgency.addObserver(politicalSubscriber);
